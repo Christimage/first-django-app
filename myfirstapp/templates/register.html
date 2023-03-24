@@ -1,0 +1,51 @@
+<h1>Sign Up here</h1>
+<style>
+  h5 {
+    color: red;
+  }
+</style>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% comment %} {% for message in messages %}
+<h5>{{message}}</h5>
+{% endfor %} {% endcomment %}
+
+<form method="POST" action="/">
+  {% csrf_token %}
+  <p>Enter your username<input type="name" name="username" /></p>
+  <p>Enter your email<input type="email" name="email" /></p>
+  <p>
+    Enter your password<input id="password" type="password" name="password" />
+  </p>
+  <p id="password-mismatch" style="color: red; display: none">
+    Password does not match!!
+  </p>
+  <p>
+    Verify password<input
+      id="verify-password"
+      type="password"
+      name="password2"
+    />
+  </p>
+  <button type="submit" onclick="return checkPasswords()">Submit</button>
+</form>
+
+<script>
+  function checkPasswords() {
+    password = document.getElementById("password").value;
+    verifyPassword = document.getElementById("verify-password").value;
+    passwordMismatch = document.getElementById("password-mismatch");
+    if (password !== verifyPassword) {
+      passwordMismatch.style.display = "block";
+      return false;
+    } else {
+      passwordMismatch.style.display = "none";
+      return true;
+    }
+  }
+</script>
